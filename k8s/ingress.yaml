@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: configmap-secrets-docker-environment
+  name: configmap-secrets-kube-file
   #  labels:
   #last_updated: 1
 spec:
