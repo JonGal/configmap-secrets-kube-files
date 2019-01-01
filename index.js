@@ -15,9 +15,9 @@ app.get('/ck_passwords', (req, res) => {
   fs.readFile('./secret/secrets.json', function (err, secret) {
     if (err) return console.log(err);
 
-    const Username = JSON.parse(secret).USERNAME;
-    const Password = JSON.parse(secret).PASSWORD;
-    const Database = JSON.parse(secret).DATABASE;
+    const Username = JSON.parse(secret).USERNAME ? JSON.parse(secret).USERNAME : "No UserName";
+    const Password = JSON.parse(secret).PASSWORD ? JSON.parse(secret).PASSWORD : "No UserName";
+    const Database = JSON.parse(secret).DATABASE ? JSON.parse(secret).DATABASE : "No UserName";
     res.write('Usernmae: '+crypto.createHash('sha256').update(Username, 'utf8').digest("hex")+'\n');
     res.write('Password: '+crypto.createHash('sha256').update(Password, 'utf8').digest("hex")+'\n');
     res.write('Database: '+crypto.createHash('sha256').update(Database, 'utf8').digest("hex")+'\n');
