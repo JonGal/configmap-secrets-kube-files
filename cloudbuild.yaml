@@ -29,7 +29,7 @@ steps:
   - image
   - deployment
   - configmap-secrets-kube-file
-  - web=gcr.io/$PROJECT_ID/configmap-secrets-kube-file:1.1
+  - web=gcr.io/$PROJECT_ID/configmap-secrets-kube-file:v1.1
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-west1-c'
   - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-build-example'
