@@ -1,13 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: configmap-secrets-docker-environment
+  name: configmap-secrets-kube-file
 spec:
   selector:
-    app: configmap-secrets-docker-environment
+    app: configmap-secrets-kube-file
   type: NodePort
   ports:
   - protocol: TCP
-    nodePort: 32133
+    nodePort: 32134
     port: 80
     targetPort: 8080
