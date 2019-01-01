@@ -15,5 +15,5 @@ spec:
 #          servicePort: 80
 #
   backend:
-    serviceName: configmap-secrets-docker-environment
+    serviceName: configmap-secrets-kube-file
     servicePort: 80
