@@ -4,6 +4,11 @@ steps:
   timeout: 180s
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/configmap-secrets-kube-file:v1.1']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['delete', 'secret', 'access-secrets', '--ignore-not-found=true']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-west1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-build-example'
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
   - kms
