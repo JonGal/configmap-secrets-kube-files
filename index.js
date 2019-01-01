@@ -11,6 +11,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/ck_passwords', (req, res) => {
+  res.write('Reporting Secrets');
   fs.readFile('./secret/secrets.json', function (err, secret) {
     if (err) return console.log(err);
 
@@ -21,7 +22,7 @@ app.get('/ck_passwords', (req, res) => {
     res.write('Password: '+crypto.createHash('sha256').update(Password, 'utf8').digest("hex")+'\n');
     res.write('Database: '+crypto.createHash('sha256').update(Database, 'utf8').digest("hex")+'\n');
   });
-res.end(`\n`);
+  res.end(`\n`);
 });
 
 
