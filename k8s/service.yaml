@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: configmap-secrets-docker-environment
+spec:
+  selector:
+    app: configmap-secrets-docker-environment
+  type: NodePort
+  ports:
+  - protocol: TCP
+    nodePort: 32133
+    port: 80
+    targetPort: 8080

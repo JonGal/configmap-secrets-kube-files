@@ -1,0 +1,55 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/configmap-secrets-docker-environment:1.1', '.']
+  timeout: 180s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/configmap-secrets-docker-environment:1.1']
+- name: 'gcr.io/cloud-builders/kubectl'
+  #args: ['create', 'secret', 'generic', 'password', '--from-literal=PASSWORD=$$PASSWORD', '-o yaml', '--dry-run', '|', 'kubectl', 'replace', '--filename=-' ]
+  args: ['create', 'secret', 'generic', 'password', '--from-literal=PASSWORD=$$PASSWORD', '-o yaml', '--dry-run', '>password.json']
+  secretEnv: ['PASSWORD']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-west1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-build-example'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['create', '--filename=./password.json' ]
+  #args: ['create', 'secret', 'generic', 'password', '--from-literal=PASSWORD=$$PASSWORD', '-o yaml', '--dry-run', '>password.json']
+  secretEnv: ['PASSWORD']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-west1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-build-example'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['create', 'secret', 'generic', 'username', '--from-literal=USERNAME=$$USERNAME', '-o yaml', '--dry-run', '|', 'kubectl', 'replace', '--filename=-' ]
+  secretEnv: ['USERNAME']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-west1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-build-example'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['create', 'secret', 'generic', 'database', '--from-literal=DATABASE=$$DATABASE', '-o yaml', '--dry-run', '|', 'kubectl', 'replace', '--filename=-' ]
+  secretEnv: ['DATABASE']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-west1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-build-example'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'k8s/']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-west1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-build-example'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - set
+  - image
+  - deployment
+  - configmap-secrets-docker-environment
+  - web=gcr.io/$PROJECT_ID/configmap-secrets-docker-environment:1.1
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-west1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-build-example'
+
+secrets:
+- kmsKeyName: projects/kube-teach1/locations/global/keyRings/build-keyrin/cryptoKeys/demo-key
+  secretEnv:
+    PASSWORD: CiQAMqs69GoAKuLbnsHhinREa50ix/lOcuaEHvQgVQAZk6fqRwYSOgD7bbM6JPvqKbd7u/zzv1cHBntwRWQbg5PjDMNU64v0lzpWYPbV2dvGNIW4Zfu9DJdDrlQJkVvDGGs=
+    DATABASE: CiQAMqs69Agv+Lp+93EaprYKmecW+VeV77GFo4RQHYHQrZSs5rgSOAD7bbM60f/PGf/vQN8svHFE7AlluliRxLkrAeqFKB8eYEWXtk+f/edOCxXkA7ZYQzSPI+gExRuf
+    USERNAME: CiQAMqs69OE7WJWU/twTo86Depkrvs/F7KeTYv9wTVNjPSkwlMoSMwD7bbM6GN9GDlTo9CMHENcEHUUnBllNts+D6chINw2ROio0Dfh7+/wQ2VLtPU7z/Jadhg==
+

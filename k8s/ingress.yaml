@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: configmap-secrets-docker-environment
+  #  labels:
+  #last_updated: 1
+spec:
+#  rules:
+#  - host: flubber.dynalias.com
+#    http:
+#      paths:
+#      - path: /*
+#        backend:
+#          serviceName: configmap-secrets-docker-environment
+#          servicePort: 80
+#
+  backend:
+    serviceName: configmap-secrets-docker-environment
+    servicePort: 80

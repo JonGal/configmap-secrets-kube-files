@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: configmap-secrets-docker-environment
+  name: configmap-secrets-docker-environment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: configmap-secrets-docker-environment
+  template:
+    metadata:
+      labels:
+        app: configmap-secrets-docker-environment
+    spec:
+      containers:
+      - name: web
+        image: gcr.io/kube-teach1/configmap-secrets-docker-environment:v1.0.0
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+        env:
+        - name: DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: DATABASE
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: username
+              key: USERNAME
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: password
+              key: PASSWORD
