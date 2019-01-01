@@ -4,6 +4,7 @@ services:
     build: .
     volumes:
       - .:/usr/src/site
+      - ./secret:/usr/src/site/secret
       - /usr/src/site/node_modules
     ports:
       - 8080:8080
