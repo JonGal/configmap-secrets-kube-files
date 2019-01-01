@@ -24,10 +24,10 @@ spec:
             path: /
             port: 8080
         volumeMounts:
-          - name: access_secrets
+          - name: access-secrets
             mountPath: /usr/src/site/secret
       volumes:
-      - name: access_secrets
+      - name: access-secrets
         secret:
-          secretName: access_secrets
+          secretName: access-secrets
 
