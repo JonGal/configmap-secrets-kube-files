@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/ck_passwords', (req, res) => {
-  fs.readFile('./secret/secret.json', function (err, secret) {
+  fs.readFile('/usr/site/secret/secret.json', function (err, secret) {
     if (err) return console.log(err);
 
     const Username = JSON.parse(secret).USERNAME;
