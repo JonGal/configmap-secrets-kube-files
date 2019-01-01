@@ -1,5 +1,5 @@
 {
-  "name": "configmap-secrets-hardcoded",
+  "name": "configmap-secrets-kube-files",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,5 +11,14 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonGal/configmap-secrets-kube-files.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JonGal/configmap-secrets-kube-files/issues"
+  },
+  "homepage": "https://github.com/JonGal/configmap-secrets-kube-files#readme"
 }
